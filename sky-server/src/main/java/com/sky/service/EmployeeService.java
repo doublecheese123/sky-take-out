@@ -15,7 +15,6 @@ public interface EmployeeService {
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO);
 
-
     /**
      * 新增员工
      * @param employeeDTO
@@ -23,5 +22,17 @@ public interface EmployeeService {
      */
     int save(EmployeeDTO employeeDTO);
 
+    /**
+     * 员工分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * 启用或禁用员工状态
+     * @param status
+     * @param id
+     */
+    void updateStatus(Integer status, Long id);
 }

@@ -99,4 +99,17 @@ public class EmployeeController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 启用或禁用员工状态
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用或禁用员工状态")
+    public Result updateStatus(@PathVariable Integer status, Long id){
+        employeeService.updateStatus(status, id);
+        return Result.success();
+    }
+
 }

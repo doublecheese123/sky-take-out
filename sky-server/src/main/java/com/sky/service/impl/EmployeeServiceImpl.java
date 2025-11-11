@@ -37,7 +37,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 员工登录
-     *
      * @param employeeLoginDTO
      * @return
      */
@@ -89,6 +88,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.insert(employee);
     }
 
+    /**
+     * 员工分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
     @Override
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
@@ -96,6 +100,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         long total = page.getTotal();
         List<Employee> result = page.getResult();
         return new PageResult(total, result);
+    }
+
+    /**
+     * 启用或禁用员工状态
+     * @param status
+     * @param id
+     */
+    @Override
+    public void updateStatus(Integer status, Long id) {
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
     }
 
 }
