@@ -24,25 +24,39 @@ public class DishController {
 
     /**
      * 新增菜品
+     *
      * @param dishDTO
      * @return
      */
     @PostMapping
     @ApiOperation("新增菜品")
-    public Result save(@RequestBody DishDTO dishDTO){
+    public Result save(@RequestBody DishDTO dishDTO) {
         dishService.saveWithFlavor(dishDTO);
         return Result.success();
     }
 
     /**
      * 菜品分页查询
+     *
      * @param dishPageQueryDTO
      * @return
      */
     @GetMapping("/page")
     @ApiOperation("菜品分页查询")
-    public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO){
+    public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO) {
         PageResult pageResult = dishService.pageQuery(dishPageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 批量删除菜品
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    @ApiOperation("批量删除菜品")
+    public Result delete(@RequestParam List<Long> ids) {
+        dishService.deleteBatch(ids);
+        return Result.success();
     }
 }
