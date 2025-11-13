@@ -53,4 +53,17 @@ public interface DishMapper {
      * @param ids
      */
     void deleteByIds(List<Long> ids);
+
+    /**
+     * 按id查询菜品
+     *
+     * @param id
+     * @return
+     */
+    @Select("select d.*,c.name as categoryName from dish d left join category c " +
+            "on d.category_id = c.id where d.id = #{id}")
+    DishVO getById(Integer id);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Dish dish);
 }
