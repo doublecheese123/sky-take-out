@@ -41,7 +41,7 @@ public interface DishService {
      * @param id
      * @return
      */
-    DishVO getById(Integer id);
+    DishVO getById(Long id);
 
     /**
      * 修改菜品
@@ -63,5 +63,12 @@ public interface DishService {
      * @param categoryId
      * @return
      */
-    List<Dish> getByCategoryId(Long categoryId);
+    List<Dish> list(Long categoryId);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 }

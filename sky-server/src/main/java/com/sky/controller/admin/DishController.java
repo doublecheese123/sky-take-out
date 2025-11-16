@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("adminDishController")
 @RequestMapping("/admin/dish")
 @Slf4j
 @Api(tags = "菜品相关接口")
@@ -71,7 +71,7 @@ public class DishController {
      */
     @GetMapping("/{id}")
     @ApiOperation("按id查询菜品")
-    public Result<DishVO> getById(@PathVariable Integer id) {
+    public Result<DishVO> getById(@PathVariable Long id) {
         DishVO dishVO = dishService.getById(id);
         return Result.success(dishVO);
     }
@@ -110,8 +110,8 @@ public class DishController {
      */
     @GetMapping("/list")
     @ApiOperation("根据分类id查询菜品")
-    public Result<List<Dish>> getByCategoryId(Long categoryId) {
-        List<Dish> dishes = dishService.getByCategoryId(categoryId);
-        return Result.success(dishes);
+    public Result<List<Dish>> list(Long categoryId){
+        List<Dish> list = dishService.list(categoryId);
+        return Result.success(list);
     }
 }

@@ -33,7 +33,7 @@ public interface DishFlavorMapper {
      * @return
      */
     @Select("select id, dish_id, name, value from dish_flavor where dish_id = #{dishId}")
-    List<DishFlavor> getByDishId(Integer dishId);
+    List<DishFlavor> getByDishId(Long dishId);
 
     @Delete("delete from dish_flavor where dish_id = #{dishId}")
     void deleteByDishId(Long dishId);
