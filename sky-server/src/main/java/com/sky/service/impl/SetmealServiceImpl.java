@@ -140,9 +140,9 @@ public class SetmealServiceImpl implements SetmealService {
                 .build();
         if (status == StatusConstant.ENABLE) {
             List<Dish> dishList = dishMapper.getBySetmealId(id);
-            if(dishList != null && dishList.size() > 0){
+            if (dishList != null && dishList.size() > 0) {
                 dishList.forEach(dish -> {
-                    if(StatusConstant.DISABLE == dish.getStatus()){
+                    if (StatusConstant.DISABLE == dish.getStatus()) {
                         throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
                     }
                 });
@@ -164,6 +164,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 根据id查询菜品选项
+     *
      * @param id
      * @return
      */
