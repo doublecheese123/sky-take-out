@@ -45,7 +45,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             ShoppingCart cart = list.get(0);
             cart.setNumber(cart.getNumber() + 1);
             shoppingCartMapper.updateNumberById(cart);
-        }else {
+        } else {
             //不存在，需要插入对应菜品或套餐
             Long dishId = shoppingCart.getDishId();
             Long setmealId = shoppingCart.getSetmealId();
@@ -54,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 shoppingCart.setName(dishVO.getName());
                 shoppingCart.setImage(dishVO.getImage());
                 shoppingCart.setAmount(dishVO.getPrice());
-            }else{
+            } else {
                 SetmealVO setmealVO = setmealMapper.getById(setmealId);
                 shoppingCart.setName(setmealVO.getName());
                 shoppingCart.setImage(setmealVO.getImage());
@@ -65,5 +65,51 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCartMapper.insert(shoppingCart);
         }
 
+    }
+
+    /**
+     * 查看购物车
+     *
+     * @return
+     */
+    public List<ShoppingCart> showShoppingCart() {
+        Long userId = BaseContext.getCurrentId();
+        ShoppingCart cart = ShoppingCart.builder()
+                .userId(userId)
+                .build();
+        return shoppingCartMapper.list(cart);
+    }
+
+    /**
+     * 清空购物车
+     */
+    public void cleanShoppingCart() {
+        Long userId = BaseContext.getCurrentId();
+        ShoppingCart cart = ShoppingCart.builder()
+                .userId(userId)
+                .build();
+        shoppingCartMapper.delete(cart);
+    }
+
+    /**
+     * 删除购物车中一个商品
+     *
+     * @param shoppingCartDTO
+     */
+    public void subShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
+        //设置查询条件，查询当前登录用户的购物车数据
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
+        if (list != null && list.size() > 0) {
+            ShoppingCart cart = list.get(0);
+            if (cart.getNumber() > 1) {
+                cart.setNumber(cart.getNumber() - 1);
+                shoppingCartMapper.updateNumberById(cart);
+            }else{
+                shoppingCartMapper.delete(cart);
+            }
+        }
     }
 }
