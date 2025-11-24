@@ -49,4 +49,18 @@ public interface OrderService {
      * @return
      */
     OrderVO orderDetail(Long id);
+
+    /**
+     * 取消订单
+     *
+     * @param id
+     */
+    void cancelOrder(Long id);
+
+    /**
+     * 再来一单
+     *
+     * @param id
+     */
+    void repetition(Long id);
 }
