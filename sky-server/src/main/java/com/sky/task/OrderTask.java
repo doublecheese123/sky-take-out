@@ -20,8 +20,7 @@ public class OrderTask {
     /**
      * 定时取消超时未支付的订单
      */
-//    @Scheduled(cron = "0 * * * * ?")
-    @Scheduled(cron = "1/5 * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void processTimeoutOrder() {
         log.info("定时处理超时订单：{}", LocalDateTime.now());
         LocalDateTime time = LocalDateTime.now().plusMinutes(-15);
@@ -39,8 +38,7 @@ public class OrderTask {
     /**
      * 定时完成派送中的订单
      */
-//    @Scheduled(cron = "0 0 1 * * ?")
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void processDeliveryOrder() {
         log.info("定时处理派送中的订单：{}", LocalDateTime.now());
         LocalDateTime time = LocalDateTime.now().plusMinutes(-60);
