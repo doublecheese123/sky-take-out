@@ -31,6 +31,7 @@
         where id = #{id}
     </update>
 
+
     <select id="pageQuery" resultType="com.sky.entity.Orders">
         select * from orders
         <where>
@@ -54,6 +55,25 @@
             </if>
         </where>
         order by order_time desc
+    </select>
+
+    <select id="sumOrder" resultType="java.lang.Integer">
+        select count(id) from orders
+        <where>
+            <if test="begin != null">and order_time &gt; #{begin}</if>
+            <if test="end != null">and order_time &lt; #{end}</if>
+            <if test="status != null">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="countSales" resultType="com.sky.dto.GoodsSalesDTO">
+        select sum(od.number) as number, name from orders o left join order_detail od on o.id = od.order_id
+        <where>
+            <if test="begin != null">and order_time &gt; #{begin}</if>
+            <if test="end != null">and order_time &lt; #{end}</if>
+            <if test="status != null">and status = #{status}</if>
+        </where>
+        group by name order by number desc limit 10
     </select>
 
 </mapper>
